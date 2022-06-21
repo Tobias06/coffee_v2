@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Accoffe</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../assets/vendors/jvectormap/jquery-jvectormap.css">
+    <!-- End plugin css for this page -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../assets/css/demo/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="../assets/images/fup logo.png" />
+    <!--firestore-->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+    <script src="../assets/js/preloader.js"></script>
+    <div class="body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+            <div class="mdc-drawer__header ">
+                <a href="../demo/emergy.html">
+                    <img src="../assets/images/logo_ac.png" alt="logo">
+                </a>
+            </div>
+            <div class="mdc-drawer__content">
+                <div class="mdc-list-group">
+                    <nav class="mdc-list mdc-drawer-menu">
+                        <div class="mdc-list-item mdc-drawer-item">
+                            <a class="mdc-drawer-link" href="../demo/emergy.html">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
+                                    aria-hidden="true">home</i>
+                                Dashboard
+                            </a>
+                        </div>
+                        <div class="mdc-list-item mdc-drawer-item">
+                            <a class="mdc-drawer-link" href="#" data-toggle="expansionPanel"
+                                data-target="form-sub-menu">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
+                                    aria-hidden="true">track_changes</i>
+                                Forms
+                                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                            </a>
+                            <div class="mdc-expansion-panel" id="form-sub-menu">
+                                <nav class="mdc-list mdc-drawer-submenu">
+                                    <div class="mdc-list-item mdc-drawer-item">
+                                        <a class="mdc-drawer-link" href="../demo/finca.html">
+                                            Finca
+                                        </a>
+                                    </div>
+                                    <div class="mdc-list-item mdc-drawer-item">
+                                        <a class="mdc-drawer-link" href="../demo/plantacion.html">
+                                            Plantación
+                                        </a>
+                                    </div>
+                                    <div class="mdc-list-item mdc-drawer-item">
+                                        <a class="mdc-drawer-link" href="../demo/cosecha.html">
+                                            Cosecha
+                                        </a>
+                                    </div>
+                                    <div class="mdc-list-item mdc-drawer-item">
+                                        <a class="mdc-drawer-link" href="../demo/secado.html">
+                                            Secado
+                                        </a>
+                                    </div>
+                                    <div class="mdc-list-item mdc-drawer-item">
+                                        <a class="mdc-drawer-link" href="../demo/trillado.html">
+                                            Trillado
+                                        </a>
+                                    </div>
+                                    <div class="mdc-list-item mdc-drawer-item">
+                                        <a class="mdc-drawer-link" href="../demo/labor.html">
+                                            Labor
+                                        </a>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </aside>
+        <!-- partial -->
+        <div class="main-wrapper mdc-drawer-app-content">
+            <!-- partial:partials/_navbar.html -->
+            <header class="mdc-top-app-bar">
+                <div class="mdc-top-app-bar__row">
+                    <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                        <button
+                            class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
+                        <span class="mdc-top-app-bar__title">Buscar datos finca</span>
+                        <div
+                            class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
+                            <i class="material-icons mdc-text-field__icon">search</i>
+                            <input class="mdc-text-field__input" id="text-field-hero-input">
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label for="text-field-hero-input" class="mdc-floating-label">Buscar..</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="divider d-none d-md-block"></div> -->
+                </div>
+            </header>
+            <!-- partial -->
+            <div class="page-wrapper mdc-toolbar-fixed-adjust">
+                <main class="content-wrapper">
+                    <div class="mdc-layout-grid">
+                        <div class="mdc-layout-grid__inner">
+                            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                                <div class="mdc-card">
+                                    <h6 class="card-title text-center">Consolidado</h6>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bg-success text-white">
+                                                    <th class="text-white text-sm-left" colspan="2">I:
+                                                        Contribución
+                                                        de la Naturaleza</th>
+                                                    <th class="text-white text-center" colspan="2">F:
+                                                        Contribucción
+                                                        de la economía</th>
+                                                    <th class="text-white">TOTAL EMERGY</th>
+                                                </tr>
+                                                <tr class="text-black bg-success">
+                                                    <th class="text-white">I: Renovables</th>
+                                                    <th class="text-white">I: No Renovables</th>
+                                                    <th class="text-white">F: Renovables</th>
+                                                    <th class="text-white">F: No Renovables</th>
+                                                    <th class="text-white"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="consolidado">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- -------------------------------GRAFICAS------------------------------------------- -->
+                            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                                <div class="mdc-card">
+                                    <h6 class="card-title">Emergy Flow (year/ha), coffe production in Los Naranjos farm,
+                                        2018</h6>
+                                    <div id="columnchart_values"></div>
+                                </div>
+                            </div>
+                            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                                <div class="mdc-card">
+                                    <h6 class="card-title">Emergy Flow (year/ha), coffe production in Los Naranjos farm,
+                                        2018</h6>
+                                    <div id="piechart_3d"></div>
+                                </div>
+                            </div>
+                            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                                <div class="mdc-card">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bg-dark">
+                                                    <th class="text-white">Transformity Indicator</th>
+                                                    <th class="text-white">2018</th>
+                                                    <th class="text-white">2019</th>
+                                                    <th class="text-white">2020</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="indicador">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+                                <div class="mdc-card"><br>
+                                    <div></div>
+                                    <h6 class="card-title">Transformity indicator</h6><br>
+                                    <div id="chart_pointSize"></div><br>
+                                </div>
+                            </div>
+                            <!-- ------------------------------FIN GRAFICAS---------------------------------------------- -->
+                            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                                <div class="mdc-card">
+                                    <h6 class="card-title text-center">Plantación</h6>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bg-success">
+                                                    <th class="text-white text-center">Item</th>
+                                                    <th class="text-white text-center">Descripción</th>
+                                                    <th class="text-white text-center">Clase</th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center">Flujo anual (seJ/year ha)
+                                                    </th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center">Transformidad(seJ/unit)</th>
+                                                    <th class="text-white text-center">Emergia(seJ/year ha)</th>
+                                                </tr>
+                                                <tr class="bg-success">
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center">2 años iniciales/ 30 años
+                                                    </th>
+                                                    <th class="text-white text-center">Año analizado 2018</th>
+                                                    <th class="text-white text-center">Total</th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="plantacion">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                                <div class="mdc-card">
+                                    <h6 class="card-title text-center">Cosecha</h6>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bg-warning">
+                                                    <th class="text-white text-center">Item</th>
+                                                    <th class="text-white text-center">Descripción</th>
+                                                    <th class="text-white text-center">Clase</th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center">Flujo anual (seJ/year ha)
+                                                    </th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center">Transformidad(seJ/unit)</th>
+                                                    <th class="text-white text-center">Emergia(seJ/year ha)</th>
+                                                </tr>
+                                                <tr class="bg-warning text-white text-center">
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white">Flujo anual(seJ/unit)</th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cosecha">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                                <div class="mdc-card">
+                                    <h6 class="card-title text-center">Secado</h6>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bg-info">
+                                                    <th class="text-white text-center">Item</th>
+                                                    <th class="text-white text-center">Descripción</th>
+                                                    <th class="text-white text-center">Clase</th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center">Flujo anual (seJ/year ha)
+                                                    </th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center">Transformidad(seJ/unit)</th>
+                                                    <th class="text-white text-center">Emergia(seJ/year ha)</th>
+                                                </tr>
+                                                <tr class="bg-info text-white text-center">
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white">Flujo anual(seJ/unit)</th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="secado">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                                <div class="mdc-card">
+                                    <h6 class="card-title text-center">Trillado</h6>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bg-success">
+                                                    <th class="text-white text-center">Item</th>
+                                                    <th class="text-white text-center">Descripción</th>
+                                                    <th class="text-white text-center">Clase</th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center">Flujo anual (seJ/year ha)
+                                                    </th>
+                                                    <th class="text-white text-center"></th>
+                                                    <th class="text-white text-center">Transformidad(seJ/unit)</th>
+                                                    <th class="text-white text-center">Emergia(seJ/year ha)</th>
+                                                </tr>
+                                                <tr class="bg-success text-white text-center">
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white">Flujo anual(seJ/unit)</th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                    <th class="text-white"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="trillado">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <!-- partial:partials/_footer.html -->
+                <footer>
+                    <div class="mdc-layout-grid">
+                        <div class="mdc-layout-grid__inner">
+                            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                                <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a
+                                        href="https://fup.edu.co/" target="_blank">Fundación universitaria de
+                                        Popayán</a>2022</span>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+        </div>
+    </div>
+    <!-- plugins:js -->
+    <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <script src="../assets/vendors/chartjs/Chart.min.js"></script>
+    <script src="../assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+    <script src="../assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="../assets/js/material.js"></script>
+    <script src="../assets/js/chartjs.js"></script>
+    <script src="../assets/js/misc.js"></script>
+    <script src="../assets/vendors/chartjs/Chart.min.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="../assets/js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <popper src="https://cdn.jsdelivr.net/npm/[email protected]/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </popper>
+    <script src="../js/emergy.js"></script>
+</body>
+
+</html>

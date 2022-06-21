@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Accoffe</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="../assets/vendors/jvectormap/jquery-jvectormap.css">
+  <!-- End plugin css for this page -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="../assets/css/demo/style.css">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="../assets/images/logo_ac.png" />
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+
+<body>
+  <script src="../assets/js/preloader.js"></script>
+  <div class="body-wrapper">
+    <!-- partial:partials/_sidebar.html -->
+    <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+      <div class="mdc-drawer__header ">
+          <a href="../demo/emergy.html">
+              <img src="../assets/images/logo_ac.png" alt="logo">
+          </a>
+      </div>
+      <div class="mdc-drawer__content">
+          <div class="mdc-list-group">
+              <nav class="mdc-list mdc-drawer-menu">
+                  <div class="mdc-list-item mdc-drawer-item">
+                      <a class="mdc-drawer-link" href="../demo/emergy.html">
+                          <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
+                              aria-hidden="true">home</i>
+                          Dashboard
+                      </a>
+                  </div>
+                  <div class="mdc-list-item mdc-drawer-item">
+                      <a class="mdc-drawer-link" href="#" data-toggle="expansionPanel"
+                          data-target="form-sub-menu">
+                          <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
+                              aria-hidden="true">track_changes</i>
+                          Forms
+                          <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                      </a>
+                      <div class="mdc-expansion-panel" id="form-sub-menu">
+                          <nav class="mdc-list mdc-drawer-submenu">
+                              <div class="mdc-list-item mdc-drawer-item">
+                                  <a class="mdc-drawer-link" href="../demo/finca.html">
+                                      Finca
+                                  </a>
+                              </div>
+                              <div class="mdc-list-item mdc-drawer-item">
+                                  <a class="mdc-drawer-link" href="../demo/plantacion.html">
+                                      Plantación
+                                  </a>
+                              </div>
+                              <div class="mdc-list-item mdc-drawer-item">
+                                  <a class="mdc-drawer-link" href="../demo/cosecha.html">
+                                      Cosecha
+                                  </a>
+                              </div>
+                              <div class="mdc-list-item mdc-drawer-item">
+                                  <a class="mdc-drawer-link" href="../demo/secado.html">
+                                      Secado
+                                  </a>
+                              </div>
+                              <div class="mdc-list-item mdc-drawer-item">
+                                  <a class="mdc-drawer-link" href="../demo/trillado.html">
+                                      Trillado
+                                  </a>
+                              </div>
+                              <div class="mdc-list-item mdc-drawer-item">
+                                  <a class="mdc-drawer-link" href="../demo/labor.html">
+                                      Labor
+                                  </a>
+                              </div>
+                          </nav>
+                      </div>
+                  </div>
+              </nav>
+          </div>
+      </div>
+  </aside>
+    <!-- partial -->
+    <div class="main-wrapper mdc-drawer-app-content">
+      <!-- partial:partials/_navbar.html -->
+      <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+            <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <button
+                    class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
+                <span class="mdc-top-app-bar__title">Buscar datos finca</span>
+                <div
+                    class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
+                    <i class="material-icons mdc-text-field__icon">search</i>
+                    <input class="mdc-text-field__input" id="text-field-hero-input">
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label for="text-field-hero-input" class="mdc-floating-label">Buscar..</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="divider d-none d-md-block"></div> -->
+        </div>
+    </header>
+      <!-- partial -->
+      <!------------------------------------------ Datos Plantacion ------------------------------------------->
+      <div class="page-wrapper mdc-toolbar-fixed-adjust">
+        <main class="content-wrapper">
+          <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell--span-12">
+                <div class="mdc-card">
+                  <h3 class="card-title text-center">Datos Plantacion</h3><br>
+                  <div class="template-demo">
+                    <div class="mdc-layout-grid__inner">
+                      <!------------------------------------------ Año ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" autofocus id="txt_anio_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Año de Plantacion</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Albedo ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_alb_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Albedo</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Insolacion ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_pri_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Prom. insolación
+                            (4kwh/m2)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ capa admosferica ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_capaAtm_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Capa atmosfera (km)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ aire ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_denAire_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Densidad del aire
+                            (kg/m3)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ v_viento ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_velocidadVient_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Velocidad del viento
+                            (m/s)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ duracion cultivo ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_cultDuracion_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Duracion de cultivo (días)
+                          </label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ evaporacion ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_evap_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Evaporacion
+                            potencial(m/año)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ coeficiente del cultivo ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_coeficiente_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Coeficiente del cultivo</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Lluvia, energía química ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_enegiaLib_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Energia libre Gibbs</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ rainfall ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="text_lluvia_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Aspecto hidrico(bajo
+                            sobra/sol)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ runoff rate ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="text_lluviaCircular_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Agua lluvia, circula libremente
+                            (Escorrentia) </label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ elevacion ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="text_elva_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Elevacion/Prom (m)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Densidad ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="text_densidadKgm_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Densidad(1000Kgm^3)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ traspiracion ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_transpir_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Transpiracion(m/ano)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ tasa de perdida de suelo ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_perdSuelo_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Perdida de suelo</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ La erosión del suelo ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_contmat_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Contenido de materia
+                            orgánica</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Fertilizante Nitrogeno ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_nitro_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Fertilizante de
+                            nitrogeno(g/ha/year)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Fertilizante Fosfato ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_fosf_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Fertilizante de
+                            Fosfato(g/ha/year)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Fertilizante Potacio ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_pota_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Fertilizante de
+                            Potacio(g/ha/year)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Fertilizante Urea ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_urea_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Urea (g/ha/year)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Cal ------------------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_cal_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Cal (g/ha/year)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ M_organica ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_fert_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Materia
+                            organica(gallinaza)</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ semillas ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_semi_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Semillas</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ Maquinas ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_maeq_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Maquinaria y
+                            mantenimiento</label>
+                        </div>
+                      </div>
+                      <!------------------------------------------ pesti ----------------------------------->
+                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <div class="mdc-text-field">
+                          <input class="mdc-text-field__input" type="number" id="txt_pefu_p">
+                          <div class="mdc-line-ripple"></div>
+                          <label for="text-field-hero-input" class="mdc-floating-label">Pesticides y fungicidas</label>
+                        </div>
+                      </div>
+                    </div><br><br>
+                    <div align="right">
+                        <a id="clearbutton1" type="sumit" class="mdc-button mdc-button--raised mdc-button--dense"
+                          style="margin-right: 10px" href="finca.html">Atras</a>
+                        <button id="boton" type="sumit" class="mdc-button mdc-button--raised mdc-button--dense"
+                          style="margin-right: 10px" onclick="guardarp()">Guardar</button>
+                        <a id="clearbutton3" type="sumit" class="mdc-button mdc-button--raised mdc-button--dense"
+                          disable="" href="cosecha.html">Siguiente</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mdc-layout-grid__cell--span-12">
+                <div class="mdc-card">
+                  <!-- <div class="template-demo"> -->
+                  <div class="mdc-layout-grid__inner" id="clearbutton2">
+                    <div
+                      class="table-responsive mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12-desktop">
+                      <table class="table table-borderless table-striped table-earning results">
+                        <thead>
+                          <tr class="bg-primary text-center">
+                            <th class="text-white" colspan="2">Años iembra</th>
+                            <th class="text-white" colspan="2">Albedo utilizado</th>
+                            <th class="text-white" colspan="2">insolacion</th>
+                            <th class="text-white" colspan="2">atmosfera</th>
+                            <th class="text-white" colspan="2">Densidad Aire</th>
+                            <th class="text-white" colspan="2">viento</th>
+                            <th class="text-white" colspan="2">Cultivo</th>
+                            <th class="text-white" colspan="2">Evaporacion</th>
+                            <th class="text-white" colspan="2">Coef Cultivo</th>
+                            <th class="text-white" colspan="2">Emergia libre</th>
+                            <th class="text-white" colspan="2">Aspecto hidrico</th>
+                            <th class="text-white" colspan="2">Agua lluvia</th>
+                            <th class="text-white" colspan="2">Elevacioin</th>
+                            <th class="text-white" colspan="2">Desidad(100Kgm3)</th>
+                            <th class="text-white" colspan="2">Transpiracion</th>
+                            <th class="text-white" colspan="2">Perdida suelo</th>
+                            <th class="text-white" colspan="2">Organica</th>
+                            <th class="text-white" colspan="1">Nitrogeno</th>
+                            <th class="text-white" colspan="1">Fosfato</th>
+                            <th class="text-white" colspan="1">Potacio</th>
+                            <th class="text-white" colspan="1">Urea</th>
+                            <th class="text-white" colspan="1">Cal</th>
+                            <th class="text-white" colspan="1">Gallinaza</th>
+                            <th class="text-white" colspan="1">Semillas</th>
+                            <th class="text-white" colspan="1">Mantenimiento</th>
+                            <th class="text-white" colspan="1">Pesticidas</th>
+                            <th class="text-white">Opciones</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tablaPlantacion">
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- partial:partials/_footer.html -->
+        <footer>
+          <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a
+                    href="https://www.bootstrapdash.com/" target="_blank">Fundación universitaria de Popayán
+                  </a>2021</span>
+              </div>
+              <div
+                class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
+              </div>
+            </div>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+    </div>
+  </div>
+  <!-- plugins:js -->
+  <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <script src="../assets/vendors/chartjs/Chart.min.js"></script>
+  <script src="../assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+  <script src="../assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="../assets/js/material.js"></script>
+  <script src="../assets/js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../assets/js/dashboard.js"></script>
+  <!-- End custom js for this page-->
+
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+    integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous">
+    </script>
+
+  <script src="../js/plantacion.js"></script>
+</body>
+
+</html>
